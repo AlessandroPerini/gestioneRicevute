@@ -19,18 +19,18 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 public class FileManager {
     
     private Utility utility = new Utility();
-    private PDDocument ricevuteTutte;
+    private PDDocument ricevuteTutte,tempPDFDoc;
     private File bolletta, pagamento, tempFile;
-    private PDDocument tempPDFDoc;
     private PDFMergerUtility merge;
-    private String data, bollettaPath, ricevutaPath;
+    private String data;
     private String[] nomiFile = {   "Predretti","Tamburelli","Lombardi","Lambri","Fracassi","Cominato","Bergamaschi",
                                     "Scolari","Pavone","Carbone","Rossi","Bardi","Pozzi","Canato",
                                     "Lenoci","Magnaghi","Stasolla","Portale","Gandini","Groppaldi","La Bella"};
     
-    public FileManager(String ricevuteTutte, String data) throws IOException {
+    public FileManager(String ricevuteTutte, String data, String bollettaPath, String pagamentoPath) throws IOException {
         this.ricevuteTutte = PDDocument.load(new File(ricevuteTutte));
-        //this.bollettaPath
+        this.bolletta = new File(bollettaPath);
+        this.pagamento = new File(pagamentoPath);
         this.data = data;
         print();
     }
@@ -41,28 +41,22 @@ public class FileManager {
         utility.creaDirectory(nomeDir);
         
         for (int i = 0; i < ricevuteTutte.getNumberOfPages(); i++) {
-            
-            bolletta = new File("C:/Users//Alessandro/Desktop/bolletta.pdf");
-            pagamento = new File("C:/Users/Alessandro/Desktop/pagamento.pdf");
-            
+                        
             tempPDFDoc = new PDDocument();            
             tempPDFDoc.addPage(ricevuteTutte.getPage(i));
                     
-            this.tempFile = new File("C:\\Users\\Alessandro\\Desktop\\Ricevute\\temp.pdf");
+            this.tempFile = new File("C:/Users/Alessandro/Desktop/Ricevute/temp.pdf");
             tempPDFDoc.save(tempFile);
             
             merge = new PDFMergerUtility();
-            
             merge.setDestinationFileName("C:/Users/Alessandro/Desktop/Ricevute/"+"Ricevuta Acqua "+data+" - Famiglia "+nomiFile[i]+".pdf");
             
             merge.addSource(tempFile);
             merge.addSource(bolletta);
             merge.addSource(pagamento);
-            
             merge.mergeDocuments();
            
             tempPDFDoc.close();
-            
         }
         
         utility.cancellaFile(tempFile.getAbsolutePath());
@@ -70,6 +64,4 @@ public class FileManager {
         ricevuteTutte.close();
         
     }
-    
-    
 }

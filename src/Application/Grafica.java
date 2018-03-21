@@ -28,50 +28,61 @@ public class Grafica {
     public static MainFrame mainFrame;
     public static JPanel pannelloPrincipale, alto, basso, coppia;
     public static JLabel nome;
-    private JFileChooser fileChooser;
-    private String ricevuteTutte, bolletta, pagamento;
-    private JButton scegliFile, stampa;
-    
+    private JFileChooser fileChooser1, fileChooser2, fileChooser3;
+    private String ricevuteTuttePath, bollettaPath, pagamentoPath;
+    private JButton scegliFile1, scegliFile2, scegliFile3, stampa;
     private FileManager fm;
-    
     
     public Grafica(){
         
-        mainFrame  = new MainFrame("Gestione PDF");        
+        mainFrame  = new MainFrame("Gestione PDF - Ricevute Bollette Acqua");        
         pannelloPrincipale = new JPanel(new GridLayout(2, 1)); pannelloPrincipale.setBackground(Color.white);
-        
-        alto = new JPanel();
-        basso = new JPanel();
-        
-        fileChooser = new JFileChooser();
-        scegliFile = new JButton("Scegli il file Ricevute");
-        ricevuteTutte = new String();
-        
-        pannelloPrincipale.add(alto);
-        pannelloPrincipale.add(basso);
-        
+        ricevuteTuttePath = new String();
        
+        fileChooser1 = new JFileChooser();
+        scegliFile1 = new JButton("Scegli il file Ricevute");
+        fileChooser2 = new JFileChooser();
+        scegliFile2 = new JButton("Scegli il file Bolletta");
+        fileChooser3 = new JFileChooser();
+        scegliFile3 = new JButton("Scegli il file Pagamento");
         
-        scegliFile.addActionListener((ActionEvent e) -> {
-            fileChooser.showOpenDialog(null);
-            ricevuteTutte = fileChooser.getSelectedFile().getAbsolutePath();
+        scegliFile1.addActionListener((ActionEvent e) -> {
+            fileChooser1.showOpenDialog(null);
+            ricevuteTuttePath = fileChooser1.getSelectedFile().getAbsolutePath();
         });
+        scegliFile2.addActionListener((ActionEvent e) -> {
+            fileChooser2.showOpenDialog(null);
+            bollettaPath = fileChooser2.getSelectedFile().getAbsolutePath();
+        });
+        scegliFile3.addActionListener((ActionEvent e) -> {
+            fileChooser3.showOpenDialog(null);
+            pagamentoPath = fileChooser3.getSelectedFile().getAbsolutePath();
+        });
+        
         stampa = new JButton("Produci Ricevute Separate");
+        stampa.setBackground(Color.green);
         stampa.addActionListener((ae) -> {
             try {
-                fm = new FileManager(ricevuteTutte, "2018.03.21");
+                fm = new FileManager(ricevuteTuttePath, "2018.03.21", bollettaPath, pagamentoPath);
             } catch (IOException ex) {
                 Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         
-        basso.add(scegliFile);
+        alto = new JPanel();
+        alto.setBackground(Color.lightGray);
+        basso = new JPanel();
+        basso.setBackground(Color.blue);
+        pannelloPrincipale.add(alto);
+        pannelloPrincipale.add(basso);
+        
+        basso.add(scegliFile1);
+        basso.add(scegliFile2);
+        basso.add(scegliFile3);
         basso.add(stampa);
-                
+        
         mainFrame.add(pannelloPrincipale);
         mainFrame.setVisible(true);
-        
-        
     }
     
     public void chiudi(){

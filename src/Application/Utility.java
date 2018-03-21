@@ -17,9 +17,9 @@ public class Utility {
         try {
             File file = new File(path);
             if (file.delete()) {
-                System.out.println(file.getName() + " is deleted!");
+                System.out.println(file.getName() + " è stato cancellato!");
             } else {
-                System.out.println("Delete operation is failed.");
+                System.out.println("Problema durante la cancellazione");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,7 +29,7 @@ public class Utility {
     void creaDirectory(String nome) {
         File theDir = new File(nome);
         if (!theDir.exists()) {
-            System.out.println("creating directory: " + theDir.getName());
+            System.out.println("Creazione della cartella '" + theDir.getName()+"'...");
             boolean result = false;
             try {
                 theDir.mkdir();
@@ -38,7 +38,7 @@ public class Utility {
                 //handle it
             }
             if (result) {
-                System.out.println("DIR created");
+                System.out.println("Cartella creata!");
             }
         }
     }
