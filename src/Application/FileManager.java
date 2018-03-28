@@ -7,6 +7,7 @@ package Application;
 
 import java.io.File;
 import java.io.IOException;
+import javax.swing.JTextArea;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
@@ -19,6 +20,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 public class FileManager {
     
     private Utility utility = new Utility();
+    public JTextArea testo;
     private PDDocument ricevuteTutte,tempPDFDoc;
     private File bolletta, pagamento, tempFile;
     private PDFMergerUtility merge;
@@ -27,18 +29,19 @@ public class FileManager {
                                     "Scolari","Pavone","Carbone","Rossi","Bardi","Pozzi","Canato",
                                     "Lenoci","Magnaghi","Stasolla","Portale","Gandini","Groppaldi","La Bella"};
     
-    public FileManager(String ricevuteTutte, String data, String bollettaPath, String pagamentoPath) throws IOException {
+    public FileManager(String ricevuteTutte, String data, String bollettaPath, String pagamentoPath, JTextArea t) throws IOException {
         this.ricevuteTutte = PDDocument.load(new File(ricevuteTutte));
         this.bolletta = new File(bollettaPath);
         this.pagamento = new File(pagamentoPath);
         this.data = data;
+        this.testo = t;
         print();
     }
     
     private void print() throws IOException{
         
         String nomeDir = new String("C:/Users/Alessandro/Desktop/Ricevute");
-        utility.creaDirectory(nomeDir);
+        utility.creaDirectory(nomeDir, testo);
         
         for (int i = 0; i < ricevuteTutte.getNumberOfPages(); i++) {
                         
@@ -59,8 +62,8 @@ public class FileManager {
             tempPDFDoc.close();
         }
         
-        utility.cancellaFile(tempFile.getAbsolutePath());
-        System.out.println("Ricevute Pronte!");
+        utility.cancellaFile(tempFile.getAbsolutePath(),testo);
+        testo.setText(testo.getText()+"\nRicevute Pronte!");
         ricevuteTutte.close();
         
     }

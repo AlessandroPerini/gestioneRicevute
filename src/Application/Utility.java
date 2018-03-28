@@ -6,6 +6,7 @@
 package Application;
 
 import java.io.File;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -13,23 +14,27 @@ import java.io.File;
  */
 public class Utility {
 
-    void cancellaFile(String path) {
+    public JTextArea testo;
+    
+    void cancellaFile(String path, JTextArea t) {
+        this.testo = t;
         try {
             File file = new File(path);
             if (file.delete()) {
-                System.out.println(file.getName() + " è stato cancellato!");
+                testo.setText(testo.getText()+"\n"+file.getName() + " è stato cancellato!");
             } else {
-                System.out.println("Problema durante la cancellazione");
+                testo.setText(testo.getText()+"\nProblema durante la cancellazione");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    void creaDirectory(String nome) {
+    void creaDirectory(String nome, JTextArea t) {
+        this.testo = t;
         File theDir = new File(nome);
         if (!theDir.exists()) {
-            System.out.println("Creazione della cartella '" + theDir.getName()+"'...");
+            testo.setText(testo.getText()+"\nCreazione della cartella '" + theDir.getName()+"'...");
             boolean result = false;
             try {
                 theDir.mkdir();
@@ -38,7 +43,7 @@ public class Utility {
                 //handle it
             }
             if (result) {
-                System.out.println("Cartella creata!");
+                testo.setText(testo.getText()+"\nCartella creata!");
             }
         }
     }
