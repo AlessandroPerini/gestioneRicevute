@@ -25,7 +25,7 @@ public class FileManager {
     private File bolletta, pagamento, tempFile;
     private PDFMergerUtility merge;
     private String data;
-    private String[] nomiFile = {   "Predretti","Tamburelli","Lombardi","Lambri","Fracassi","Cominato","Bergamaschi",
+    private String[] nomiFile = {   "Predretti","Tamburelli","Lombardi","Lambri","Fracassi","Cerra","Bergamaschi",
                                     "Scolari","Pavone","Carbone","Rossi","Bardi","Pozzi","Canato",
                                     "Lenoci","Magnaghi","Stasolla","Portale","Gandini","Groppaldi","La Bella"};
     
@@ -56,7 +56,7 @@ public class FileManager {
             
             merge.addSource(tempFile);
             merge.addSource(bolletta);
-            merge.addSource(pagamento);
+            //merge.addSource(pagamento);
             merge.mergeDocuments();
            
             tempPDFDoc.close();
