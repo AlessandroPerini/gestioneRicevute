@@ -50,6 +50,7 @@ public class Grafica {
         scegliFile2 = new JButton("Scegli il file Bolletta");
         fileChooser3 = new JFileChooser();
         scegliFile3 = new JButton("Scegli il file Pagamento");
+        scegliFile3.setBackground(Color.red);
         
         ActionListener al = new ActionListener() {
             @Override
@@ -78,7 +79,7 @@ public class Grafica {
             public void actionPerformed(ActionEvent ae) {
                 int returnVal3 = fileChooser3.showOpenDialog(null);
                 if(returnVal3 == JFileChooser.APPROVE_OPTION){
-                    pagamentoPath = fileChooser3.getSelectedFile().getAbsolutePath();
+                    pagamentoPath = "";//fileChooser3.getSelectedFile().getAbsolutePath();
                 }
             }
         };
@@ -110,13 +111,13 @@ public class Grafica {
         
         stampa.addActionListener((ae) -> {
             try {
-                fm = new FileManager(ricevuteTuttePath, "2018.03.21", bollettaPath, pagamentoPath, testo);
+                fm = new FileManager(ricevuteTuttePath, "2019.08.31", bollettaPath, pagamentoPath, testo);
             } catch (IOException ex) {
                 String mancante = new String("");
                 mancante = mancante +"";
                 if(ricevuteTuttePath.isEmpty()) mancante = mancante +"'Ricevute'";
                 if(bollettaPath.isEmpty()) mancante = mancante +", 'Bolletta'";
-                if(pagamentoPath.isEmpty()) mancante = mancante +", 'Pagamento'";
+                //if(pagamentoPath.isEmpty()) mancante = mancante +", 'Pagamento'";
                 testo.setText("Selezionare i seguenti pdf: "+mancante);
             }
         });
